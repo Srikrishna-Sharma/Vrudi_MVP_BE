@@ -10,7 +10,7 @@ namespace Vrudi_MVP_BE.Controllers
     {
 
         [HttpGet]
-        [Authorize]
+        //[Authorize] TODO Need to remove comment
 
         [Route("sampletest")]
         public IActionResult testEndpoint()

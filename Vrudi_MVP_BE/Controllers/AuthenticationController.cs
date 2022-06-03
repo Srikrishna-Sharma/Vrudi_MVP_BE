@@ -9,8 +9,8 @@ namespace Vrudi_MVP_BE.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ICredentialsManager _authenticationManager;
-        public AuthenticationController(ICredentialsManager authenticationManager)
+        private readonly ICredentialsManagerService _authenticationManager;
+        public AuthenticationController(ICredentialsManagerService authenticationManager)
         {
             _authenticationManager = authenticationManager;
         }

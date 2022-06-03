@@ -7,7 +7,7 @@ using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Services.Classes
 {
-    public class CredentialsManager : ICredentialsManager
+    public class CredentialsManagerService : ICredentialsManagerService
     {
         public string Authenticate(string email, string password)
         {
