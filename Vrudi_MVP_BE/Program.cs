@@ -3,9 +3,11 @@
 using Vrudi_MVP_BE.Extensions;
 using Vrudi_MVP_BE.VrDbContext;
 using Microsoft.EntityFrameworkCore;
-
+using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddJwtAuthenticate();
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vrudi_MVP_BE.DTOs;
+using Vrudi_MVP_BE.Helpers.interfaces;
 using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Controllers
@@ -10,9 +11,13 @@ namespace Vrudi_MVP_BE.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly ICredentialsManagerService _authenticationManager;
-        public AuthenticationController(ICredentialsManagerService authenticationManager)
+        private readonly ILoggerManager _logger;
+
+        public AuthenticationController(ICredentialsManagerService authenticationManager, ILoggerManager logger)
         {
             _authenticationManager = authenticationManager;
+            _logger = logger;
+
         }
 
         [HttpGet]
@@ -20,6 +25,8 @@ namespace Vrudi_MVP_BE.Controllers
 
         public IActionResult Authenticate([FromQuery]string email, string password)
         {
+            _logger.LogInfo("Testing logs");
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return BadRequest("Email and/or Password not specified");
 
