@@ -25,7 +25,6 @@ namespace Vrudi_MVP_BE.Controllers
 
         public IActionResult Authenticate([FromQuery]string email, string password)
         {
-            _logger.LogInfo("Testing logs");
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return BadRequest("Email and/or Password not specified");
