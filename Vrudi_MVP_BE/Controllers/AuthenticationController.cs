@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Vrudi_MVP_BE.DTOs;
 using Vrudi_MVP_BE.Helpers.interfaces;
+using Vrudi_MVP_BE.Helpers.Services;
 using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Controllers
@@ -27,12 +28,29 @@ namespace Vrudi_MVP_BE.Controllers
         {
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-                return BadRequest("Email and/or Password not specified");
+            {
+                string error = "Email and/or Password not specified";
+             
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+                
 
             string token = _authenticationManager.Authenticate(email, password);
             if (string.IsNullOrEmpty(token))
-                return Unauthorized("Invalid Credentials");
-            else return Ok(token);
+            {
+                string error = "Invalid Credentials";
+
+                return Unauthorized(DataWrapperService.WrapData(error, false));
+            }
+                
+            else
+            {
+                string success = "Data Found Successfully";
+                Dictionary<string, string> tokenPair = new Dictionary<string, string>();
+                tokenPair.Add("token", token);
+                return Ok(DataWrapperService.WrapData(success, true, tokenPair));
+            }
+            
         }
 
         [HttpGet]
@@ -40,11 +58,24 @@ namespace Vrudi_MVP_BE.Controllers
         public IActionResult ForgotPassword([FromQuery] string email, string securityQuestion, string securityAnswer)
         {
             if ( string.IsNullOrEmpty(email))
-                return BadRequest("Email is not specified");
-          
-            if (_authenticationManager.ValidateSecurityQuestions(email,securityQuestion,securityAnswer))
-                return Ok(" Please Reset the Password");
-            else return Unauthorized("Invalid Credentials");
+            {
+                string error = "Email is not specified";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+
+            if (_authenticationManager.ValidateSecurityQuestions(email, securityQuestion, securityAnswer))
+            {
+                string success = "Please Reset the Password";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            
+            else
+            {
+                string error = "Invalid Credentials";
+                return Unauthorized(DataWrapperService.WrapData(error, false));
+            } 
 
         }
 
@@ -55,8 +86,14 @@ namespace Vrudi_MVP_BE.Controllers
         {
 
             if (_authenticationManager.ResetPasword(credentials))
-                return Ok("Password Has been set succcessfully");
-            else return Unauthorized("Invalid Credentials");
+            {
+                string success = "Password Has been set succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else {
+                string error = "Invalid Credentials";
+                return Unauthorized(DataWrapperService.WrapData(error, false));
+            }
 
         }
     }
