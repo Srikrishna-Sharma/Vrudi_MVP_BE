@@ -33,5 +33,15 @@ namespace Vrudi_MVP_BE.Repositories.Classes
             return false;
 
         }
+
+        public bool AddUserDetails(UserLogin userDetails)
+        {
+            var result = _dbContext.userLogins.Add(userDetails);
+            var rowCount = _dbContext.SaveChanges();
+
+            return rowCount > 0 ? true : false;
+            
+
+        }
     }
 }

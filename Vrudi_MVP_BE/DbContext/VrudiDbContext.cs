@@ -22,7 +22,8 @@ namespace Vrudi_MVP_BE.VrDbContext
         }
 
         public DbSet<UserLogin> userLogins { get; set; }
-
+        public DbSet<Holidays> holiday { get; set; }
+        
     }
 
 

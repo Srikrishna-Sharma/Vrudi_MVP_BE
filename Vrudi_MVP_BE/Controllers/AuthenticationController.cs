@@ -7,7 +7,7 @@ using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Controllers
 {
-    [Route("api/[controller]")]
+    
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace Vrudi_MVP_BE.Controllers
         }
 
         [HttpGet]
-        [Route("authenticate")]
+        [Route("/authenticate")]
 
         public IActionResult Authenticate([FromQuery]string email, string password)
         {
@@ -54,7 +54,7 @@ namespace Vrudi_MVP_BE.Controllers
         }
 
         [HttpGet]
-        [Route("forgotpassword")]
+        [Route("/forgotpassword")]
         public IActionResult ForgotPassword([FromQuery] string email, string securityQuestion, string securityAnswer)
         {
             if ( string.IsNullOrEmpty(email))
@@ -81,7 +81,7 @@ namespace Vrudi_MVP_BE.Controllers
 
 
         [HttpPost]
-        [Route("resetpassword")]
+        [Route("/resetpassword")]
         public IActionResult ResetPassword([FromBody] UserCredentials credentials)
         {
 
@@ -93,6 +93,24 @@ namespace Vrudi_MVP_BE.Controllers
             else {
                 string error = "Invalid Credentials";
                 return Unauthorized(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpPost]
+        [Route("/signup")]
+        public IActionResult SignUp([FromBody] UserCredentials credentials)
+        {
+
+            if (_authenticationManager.SignUp(credentials))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
             }
 
         }

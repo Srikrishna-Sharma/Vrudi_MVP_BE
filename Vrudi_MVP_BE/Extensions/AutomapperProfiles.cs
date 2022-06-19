@@ -9,6 +9,7 @@ namespace Vrudi_MVP_BE.Extensions
         public AutomapperProfiles()
         {
             CreateMap<UserCredentials, UserLogin>().ReverseMap();
+            CreateMap<HolidaysDto, Holidays>().ReverseMap();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Vrudi_MVP_BE.Extensions
             services.AddTransient<ICredentialsManagerService, CredentialsManagerService>();
             services.AddTransient<ICredentialRepository, CredentialRepository>();
             services.AddSingleton<ILoggerManager, LoggerManager>();
+            services.AddTransient<IHolidayService, HolidayService>();
+            services.AddTransient<IHolidayRepository, HolidayRepository>();
 
 
             return services;

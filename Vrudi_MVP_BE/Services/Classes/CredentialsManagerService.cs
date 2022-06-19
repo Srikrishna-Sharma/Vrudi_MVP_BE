@@ -54,6 +54,17 @@ namespace Vrudi_MVP_BE.Services.Classes
             var creds = _mapper.Map<UserLogin>(credentials);
             return _credentialRepository.ResetPasword(creds);
         }
+        public bool SignUp(UserCredentials credentials)
+        {
+            var creds = _mapper.Map<UserLogin>(credentials);
+            return _credentialRepository.AddUserDetails(creds);
+            //if (_credentialRepository.AddUserDetails(email, fullname, username, password, usertype, professional, securityQuestion, securityAnswer))
+            //{
+            //    return true;
+            //}
+            //else return false;
+
+        }
     }
     
 }
