@@ -114,5 +114,23 @@ namespace Vrudi_MVP_BE.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("/signup")]
+        public IActionResult EmployeeSignUp([FromBody] EmployeeDetails details)
+        {
+
+            if (_authenticationManager.EmployeeSignUp(details))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
     }
 }

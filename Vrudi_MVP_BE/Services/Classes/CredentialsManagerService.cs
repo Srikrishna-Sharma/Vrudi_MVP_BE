@@ -65,6 +65,17 @@ namespace Vrudi_MVP_BE.Services.Classes
             //else return false;
 
         }
+        public bool EmployeeSignUp(EmployeeDetails details)
+        {
+            var info = _mapper.Map<Employees>(details);
+            return _credentialRepository.AddEmployee(info);
+            //if (_credentialRepository.AddUserDetails(email, fullname, username, password, usertype, professional, securityQuestion, securityAnswer))
+            //{
+            //    return true;
+            //}
+            //else return false;
+
+        }
     }
     
 }

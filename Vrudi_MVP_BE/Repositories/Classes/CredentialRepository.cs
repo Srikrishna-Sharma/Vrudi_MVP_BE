@@ -43,5 +43,15 @@ namespace Vrudi_MVP_BE.Repositories.Classes
             
 
         }
+
+        public bool AddEmployee(Employees employee)
+        {
+            var result = _dbContext.employees.Add(employee);
+            var rowCount = _dbContext.SaveChanges();
+
+            return rowCount > 0 ? true : false;
+
+
+        }
     }
 }

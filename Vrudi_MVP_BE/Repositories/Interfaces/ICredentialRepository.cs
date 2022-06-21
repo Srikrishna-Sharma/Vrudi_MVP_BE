@@ -8,5 +8,7 @@ namespace Vrudi_MVP_BE.Repositories.Interfaces
         bool ValidateSecurityQuestions(string email, string question, string answer);
         bool ResetPasword(UserLogin userLogin);
         bool AddUserDetails(UserLogin addUser);
+        bool AddEmployee(Employees employee);
+        
     }
 }
