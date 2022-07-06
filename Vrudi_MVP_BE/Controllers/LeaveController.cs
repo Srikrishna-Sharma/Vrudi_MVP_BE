@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vrudi_MVP_BE.DTOs;
 using Vrudi_MVP_BE.Helpers.interfaces;
@@ -7,50 +8,49 @@ using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Controllers
 {
+    [ApiController]
     [Authorize]
-    public class HolidayController : ControllerBase
+    public class LeaveController : ControllerBase
     {
-        private readonly IHolidayService _holidays;
         private readonly ILoggerManager _logger;
+        private readonly ILeaveService _leave;
 
-        public HolidayController(IHolidayService holiday, ILoggerManager logger)
+        public LeaveController(ILoggerManager logger, ILeaveService leave)
         {
-            _holidays = holiday;
             _logger = logger;
-
+            _leave = leave;
         }
 
         [HttpPost]
-        [Route("/saveholidays")]
-        public IActionResult SaveHolidays([FromBody] HolidaysDto holiday)
+        [Route("/createleave")]
+        public IActionResult CreateLeave([FromBody] LeaveTypeDTO details)
         {
 
-            if (_holidays.SaveHoliday(holiday))
+            if (_leave.CreateLeave(details))
             {
-                string success = "Holiday has been set succcessfully";
+                string success = "Leaves are created successfully";
                 return Ok(DataWrapperService.WrapData(success, true));
             }
             else
             {
-                string error = "Error while saving holiday";
+                string error = "Invalid Details";
                 return BadRequest(DataWrapperService.WrapData(error, false));
             }
 
         }
 
         [HttpGet]
-        [Route("/getAllHolidays")]
-
-        public IActionResult GetHolidays()
+        [Route("/getleaves")]
+        
+        public IActionResult GetAllLeave()
         {
-            
 
-            var holidays = _holidays.GetAllHolidays();
+            var leave = _leave.GetAllLeaves();
 
-            if(holidays.Any())
+            if (leave.Any())
             {
                 string success = "Data Found Successfully";
-                return Ok(DataWrapperService.WrapData(success, true, holidays));
+                return Ok(DataWrapperService.WrapData(success, true, leave));
             }
             else
             {
@@ -60,7 +60,5 @@ namespace Vrudi_MVP_BE.Controllers
             }
 
         }
-
-
     }
 }

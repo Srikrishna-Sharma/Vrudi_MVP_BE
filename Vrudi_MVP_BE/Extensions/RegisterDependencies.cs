@@ -16,6 +16,10 @@ namespace Vrudi_MVP_BE.Extensions
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddTransient<IHolidayService, HolidayService>();
             services.AddTransient<IHolidayRepository, HolidayRepository>();
+            services.AddTransient<ILeaveService, LeaveService>();
+            services.AddTransient<ILeaveRepository, LeaveRepository>();
+            services.AddTransient<IOfficeTimingRepository, OfficeTimingRepository>();
+            services.AddTransient<IOfficeTimingsService, OfficeTimingsService>();
 
 
             return services;

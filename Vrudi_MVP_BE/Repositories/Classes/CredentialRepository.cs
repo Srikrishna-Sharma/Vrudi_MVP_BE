@@ -46,12 +46,58 @@ namespace Vrudi_MVP_BE.Repositories.Classes
 
         public bool AddEmployee(Employees employee)
         {
-            var result = _dbContext.employees.Add(employee);
+            var result = _dbContext.employee.Add(employee);
             var rowCount = _dbContext.SaveChanges();
 
             return rowCount > 0 ? true : false;
 
 
+        }
+
+        public bool AddClient(Clients client)
+        {
+            var result = _dbContext.clients.Add(client);
+            var rowCount = _dbContext.SaveChanges();
+
+            return rowCount > 0 ? true : false;
+        }
+
+        public bool AddProfessional(Professionals professional)
+        {
+            var result = _dbContext.professionals.Add(professional);
+            var rowCount = _dbContext.SaveChanges();
+
+            return rowCount > 0 ? true : false;
+        }
+
+        public Employees GetEmployeeByEmail(string email)
+        {
+            return _dbContext.employee?.FirstOrDefault(x => x.PersonalEmail == email);
+        }
+
+        public List<Employees> GetAllEmployees()
+        {
+            return _dbContext.employee?.Where(x => x.IsActive)?.ToList();
+        }
+
+        public Professionals GetProfessionalByEmail(string email)
+        {
+            return _dbContext.professionals?.FirstOrDefault(x => x.RegisteredEmail == email);
+        }
+
+        public List<Professionals> GetAllProfessionals()
+        {
+            return _dbContext.professionals?.Where(x => x.IsActive)?.ToList();
+        }
+
+        public Clients GetClientByEmail(string email)
+        {
+            return _dbContext.clients?.FirstOrDefault(x => x.OrganisationMail == email);
+        }
+
+        public List<Clients> GetAllClients()
+        {
+            return _dbContext.clients?.Where(x => x.IsActive)?.ToList();
         }
     }
 }

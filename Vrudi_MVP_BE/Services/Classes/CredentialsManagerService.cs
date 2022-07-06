@@ -49,12 +49,12 @@ namespace Vrudi_MVP_BE.Services.Classes
         {
             return _credentialRepository.ValidateSecurityQuestions(email, question, answer);
         }
-        public bool ResetPasword(UserCredentials credentials)
+        public bool ResetPasword(UserCredentialsDto credentials)
         {
             var creds = _mapper.Map<UserLogin>(credentials);
             return _credentialRepository.ResetPasword(creds);
         }
-        public bool SignUp(UserCredentials credentials)
+        public bool SignUp(UserCredentialsDto credentials)
         {
             var creds = _mapper.Map<UserLogin>(credentials);
             return _credentialRepository.AddUserDetails(creds);
@@ -65,16 +65,53 @@ namespace Vrudi_MVP_BE.Services.Classes
             //else return false;
 
         }
-        public bool EmployeeSignUp(EmployeeDetails details)
+        public bool EmployeeSignUp(EmployeeDetailsDto details)
         {
             var info = _mapper.Map<Employees>(details);
             return _credentialRepository.AddEmployee(info);
-            //if (_credentialRepository.AddUserDetails(email, fullname, username, password, usertype, professional, securityQuestion, securityAnswer))
-            //{
-            //    return true;
-            //}
-            //else return false;
 
+        }
+
+        public bool ClientSignUp(ClientDetailsDto details)
+        {
+            var info = _mapper.Map<Clients>(details);
+            return _credentialRepository.AddClient(info);
+        }
+
+        public bool ProfessionalSignUp(ProfessionalDetailsDto details)
+        {
+            var info = _mapper.Map<Professionals>(details);
+            return _credentialRepository.AddProfessional(info);
+        }
+
+        public List<EmployeeDetailsDto> GetAllEmployees()
+        {
+            return _mapper.Map<List<EmployeeDetailsDto>>(_credentialRepository.GetAllEmployees());
+        }
+
+        public List<ClientDetailsDto> GetAllClients()
+        {
+            return _mapper.Map<List<ClientDetailsDto>>(_credentialRepository.GetAllClients());
+        }
+
+        public List<ProfessionalDetailsDto> GetAllProfessionals()
+        {
+            return _mapper.Map<List<ProfessionalDetailsDto>>(_credentialRepository.GetAllProfessionals());
+        }
+
+        public EmployeeDetailsDto GetEmployeeByEmail(string email)
+        {
+            return _mapper.Map<EmployeeDetailsDto>(_credentialRepository.GetEmployeeByEmail(email));
+        }
+
+        public ProfessionalDetailsDto GetProfessionalByEmail(string email)
+        {
+            return _mapper.Map<ProfessionalDetailsDto>(_credentialRepository.GetProfessionalByEmail(email));
+        }
+
+        public ClientDetailsDto GetClientByEmail(string email)
+        {
+            return _mapper.Map<ClientDetailsDto>(_credentialRepository.GetClientByEmail(email));
         }
     }
     

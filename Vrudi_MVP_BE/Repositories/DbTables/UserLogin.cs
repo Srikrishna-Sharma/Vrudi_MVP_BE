@@ -2,7 +2,7 @@
 
 namespace Vrudi_MVP_BE.Repositories.DbTables
 {
-    public class UserLogin
+    public class UserLogin : BaseTable
     {
         [Key]
         public string Email { get; set; }

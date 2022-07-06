@@ -1,7 +1,7 @@
 ﻿
 namespace Vrudi_MVP_BE.DTOs
 {
-    public class UserCredentials
+    public class UserCredentialsDto
     {
 
         public string Email { get; set; }

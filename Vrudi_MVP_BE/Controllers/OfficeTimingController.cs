@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vrudi_MVP_BE.DTOs;
 using Vrudi_MVP_BE.Helpers.interfaces;
@@ -8,49 +9,48 @@ using Vrudi_MVP_BE.Services.Interfaces;
 namespace Vrudi_MVP_BE.Controllers
 {
     [Authorize]
-    public class HolidayController : ControllerBase
+    [ApiController]
+    public class OfficeTimingController : ControllerBase
     {
-        private readonly IHolidayService _holidays;
         private readonly ILoggerManager _logger;
+        private readonly IOfficeTimingsService _office;
 
-        public HolidayController(IHolidayService holiday, ILoggerManager logger)
+        public OfficeTimingController(ILoggerManager logger, IOfficeTimingsService office)
         {
-            _holidays = holiday;
             _logger = logger;
-
+            _office = office;
         }
 
         [HttpPost]
-        [Route("/saveholidays")]
-        public IActionResult SaveHolidays([FromBody] HolidaysDto holiday)
+        [Route("/saveorupdatetimings")]
+        public IActionResult SaveOrUpdateTimings([FromBody] OfficeTimingsDto details)
         {
 
-            if (_holidays.SaveHoliday(holiday))
+            if (_office.SaveOrUpdateOfficeTimings(details))
             {
-                string success = "Holiday has been set succcessfully";
+                string success = "Office Timings are saved successfully";
                 return Ok(DataWrapperService.WrapData(success, true));
             }
             else
             {
-                string error = "Error while saving holiday";
+                string error = "Invalid Details";
                 return BadRequest(DataWrapperService.WrapData(error, false));
             }
 
         }
 
         [HttpGet]
-        [Route("/getAllHolidays")]
+        [Route("/getofficetimings/{email}")]
 
-        public IActionResult GetHolidays()
+        public IActionResult GetOfficeTimings(string email)
         {
-            
 
-            var holidays = _holidays.GetAllHolidays();
+            var office = _office.GetOfficeTimings(email);
 
-            if(holidays.Any())
+            if (office != null)
             {
                 string success = "Data Found Successfully";
-                return Ok(DataWrapperService.WrapData(success, true, holidays));
+                return Ok(DataWrapperService.WrapData(success, true, office));
             }
             else
             {
@@ -60,7 +60,5 @@ namespace Vrudi_MVP_BE.Controllers
             }
 
         }
-
-
     }
 }
