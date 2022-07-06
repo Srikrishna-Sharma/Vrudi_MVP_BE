@@ -22,7 +22,13 @@ namespace Vrudi_MVP_BE.VrDbContext
         }
 
         public DbSet<UserLogin> userLogins { get; set; }
-
+        public DbSet<Holidays> holiday { get; set; }
+        public DbSet<Employees> employee{ get; set; }
+        public DbSet<LeaveType> leaveTypes{ get; set; }
+        public DbSet<Clients> clients{ get; set; }
+        public DbSet<Professionals> professionals{ get; set; }
+        public DbSet<OfficeTimings> officeTimings{ get; set; }
+        
     }
 
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vrudi_MVP_BE.VrDbContext;
 
@@ -11,9 +12,10 @@ using Vrudi_MVP_BE.VrDbContext;
 namespace Vrudi_MVP_BE.Migrations
 {
     [DbContext(typeof(VrudiDbContext))]
-    partial class VrudiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220623143429_Migration15")]
+    partial class Migration15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +48,6 @@ namespace Vrudi_MVP_BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("GstNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -56,9 +55,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("IfscCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("MobileNumber")
                         .IsRequired()
@@ -94,13 +90,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<DateTime>("RegDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("clients");
@@ -133,9 +122,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<double>("BasicSalary")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("CurrentAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -165,9 +151,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("IfscCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");
@@ -206,13 +189,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<DateTime>("SalaryDueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("employee");
@@ -225,9 +201,6 @@ namespace Vrudi_MVP_BE.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -245,13 +218,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -272,18 +238,12 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<int>("CapYearly")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("DeductionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeductionValue")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -293,58 +253,9 @@ namespace Vrudi_MVP_BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("leaveTypes");
-                });
-
-            modelBuilder.Entity("Vrudi_MVP_BE.Repositories.DbTables.OfficeTimings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EarlyThreshold")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LateThreshold")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OfficeEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("officeTimings");
                 });
 
             modelBuilder.Entity("Vrudi_MVP_BE.Repositories.DbTables.Professionals", b =>
@@ -366,9 +277,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -393,9 +301,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("Industry")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("OrganisationMail")
                         .IsRequired()
@@ -432,13 +337,6 @@ namespace Vrudi_MVP_BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -452,12 +350,6 @@ namespace Vrudi_MVP_BE.Migrations
                 {
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -478,13 +370,6 @@ namespace Vrudi_MVP_BE.Migrations
                     b.Property<string>("SecurityQuestion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
                         .IsRequired()

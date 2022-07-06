@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vrudi_MVP_BE.DTOs;
 using Vrudi_MVP_BE.Helpers.interfaces;
@@ -7,7 +8,7 @@ using Vrudi_MVP_BE.Services.Interfaces;
 
 namespace Vrudi_MVP_BE.Controllers
 {
-    [Route("api/[controller]")]
+    
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace Vrudi_MVP_BE.Controllers
         }
 
         [HttpGet]
-        [Route("authenticate")]
+        [Route("/authenticate")]
 
         public IActionResult Authenticate([FromQuery]string email, string password)
         {
@@ -54,7 +55,7 @@ namespace Vrudi_MVP_BE.Controllers
         }
 
         [HttpGet]
-        [Route("forgotpassword")]
+        [Route("/forgotpassword")]
         public IActionResult ForgotPassword([FromQuery] string email, string securityQuestion, string securityAnswer)
         {
             if ( string.IsNullOrEmpty(email))
@@ -81,8 +82,8 @@ namespace Vrudi_MVP_BE.Controllers
 
 
         [HttpPost]
-        [Route("resetpassword")]
-        public IActionResult ResetPassword([FromBody] UserCredentials credentials)
+        [Route("/resetpassword")]
+        public IActionResult ResetPassword([FromBody] UserCredentialsDto credentials)
         {
 
             if (_authenticationManager.ResetPasword(credentials))
@@ -93,6 +94,225 @@ namespace Vrudi_MVP_BE.Controllers
             else {
                 string error = "Invalid Credentials";
                 return Unauthorized(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpPost]
+        [Route("/signup")]
+        public IActionResult SignUp([FromBody] UserCredentialsDto credentials)
+        {
+
+            if (_authenticationManager.SignUp(credentials))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpPost]
+        [Route("/updateemployee")]
+        [Authorize]
+        public IActionResult EmployeeSignUp([FromBody] EmployeeDetailsDto details)
+        {
+
+            if (_authenticationManager.EmployeeSignUp(details))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpPost]
+        [Route("/updateclient")]
+        [Authorize]
+        public IActionResult ClientSignup([FromBody] ClientDetailsDto details)
+        {
+
+            if (_authenticationManager.ClientSignUp(details))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpPost]
+        [Route("/updateprofessional")]
+        [Authorize]
+        public IActionResult ProfessionalSignup([FromBody] ProfessionalDetailsDto details)
+        {
+
+            if (_authenticationManager.ProfessionalSignUp(details))
+            {
+                string success = "You have been signed up succcessfully";
+                return Ok(DataWrapperService.WrapData(success, true));
+            }
+            else
+            {
+                string error = "Invalid Details";
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getallemployees")]
+        [Authorize]
+
+        public IActionResult GetEmployees()
+        {
+
+
+            var employees = _authenticationManager.GetAllEmployees();
+
+            if (employees.Any())
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, employees));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getallclients")]
+        [Authorize]
+
+        public IActionResult GetClients()
+        {
+
+
+            var clients = _authenticationManager.GetAllClients();
+
+            if (clients.Any())
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, clients));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getallprofessionals")]
+        [Authorize]
+
+        public IActionResult GetProfessionals()
+        {
+
+
+            var professionals = _authenticationManager.GetAllProfessionals();
+
+            if (professionals.Any())
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, professionals));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getemployee/{email}")]
+        [Authorize]
+
+        public IActionResult GetEmployeeByEmail(string email)
+        {
+
+
+            EmployeeDetailsDto employee = _authenticationManager.GetEmployeeByEmail(email);
+
+            if (employee != null)
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, employee));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getclient/{email}")]
+        [Authorize]
+
+        public IActionResult GetClientByEmail(string email)
+        {
+
+
+            ClientDetailsDto client = _authenticationManager.GetClientByEmail(email);
+
+            if (client != null)
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, client));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
+            }
+
+        }
+
+        [HttpGet]
+        [Route("/getprofessional/{email}")]
+        [Authorize]
+
+        public IActionResult GetProfessionalByEmail(string email)
+        {
+
+
+            ProfessionalDetailsDto professional = _authenticationManager.GetProfessionalByEmail(email);
+
+            if (professional != null)
+            {
+                string success = "Data Found Successfully";
+                return Ok(DataWrapperService.WrapData(success, true, professional));
+            }
+            else
+            {
+                string error = "No data found";
+
+                return BadRequest(DataWrapperService.WrapData(error, false));
             }
 
         }

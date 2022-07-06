@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vrudi_MVP_BE.VrDbContext;
 
@@ -11,9 +12,10 @@ using Vrudi_MVP_BE.VrDbContext;
 namespace Vrudi_MVP_BE.Migrations
 {
     [DbContext(typeof(VrudiDbContext))]
-    partial class VrudiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220623162555_Migration16")]
+    partial class Migration16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
